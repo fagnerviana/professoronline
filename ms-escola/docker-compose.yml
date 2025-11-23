@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: 'postgres:16-alpine'
+    environment:
+      - 'POSTGRES_DB=ms-escola'
+      - 'POSTGRES_USER=admin'
+      - 'POSTGRES_PASSWORD=123456'
+    ports:
+      - '5432:5432'
+    networks:
+      - disponibilidade-network
+
+  pgadmin:
+    image: 'dpage/pgadmin4:latest'
+    environment:
+      - 'PGADMIN_DEFAULT_EMAIL=admin@admin.com'
+      - 'PGADMIN_DEFAULT_PASSWORD=admin'
+    ports:
+      - '15432:80'
+    networks:
+      - disponibilidade-network
+    depends_on:
+      - postgres
+
+networks:
+  disponibilidade-network:
+    driver: bridge
